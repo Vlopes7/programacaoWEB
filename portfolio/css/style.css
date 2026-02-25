@@ -1,99 +1,274 @@
 .faculty-glyphic-regular {
-    font-family: "Faculty Glyphic", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Faculty Glyphic", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
-    background-color: rgb(197, 196, 196); 
-    padding: 0; 
-    margin: 0 0 0 0;
-}
-
-.hero {
-    width: 100%;
-}
-
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10%;
-    position: relative; 
-    z-index: 10; 
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-}
-
-nav ul li {
-    display: inline-block;
-    padding: 10px 20px;
-}
-
-a {
-    text-decoration: none;
-    font-size: 16pt;
-}
-
-ul li a:hover {
-    color: white;
-}
-
-ul li a {
-    position: relative;
-    color: black;
-    transition: 0.5s;
-}
-
-ul li a::after {
-    content: " ";
-    width: 0%;
-    height: 3px;
-    background-color: black;
-    position: absolute;
-}
-
-.container {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-}
-
-.botoes{
-    display: flex;
-    justify-content: center;  
-    gap: 100px;
-    z-index: 10;
-    position: relative; 
-    z-index: 10; 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
-    font-family: "Faculty Glyphic";
-    padding: 0;
-    margin: 0;
+  padding: 40px 10%;
+  flex: 1;
 }
 
-.btn1 a, .btn2 a{
-    color: inherit;  
+.hero {
+  width: 100%;
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10%;
+  position: relative;
+  z-index: 10;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  gap: 20px;
+}
+nav ul li {
+  display: inline-block;
+}
+nav ul li a {
+  text-decoration: none;
+  font-size: 16pt;
+  position: relative;
+  color: black;
+  transition: 0.5s;
+}
+nav ul li a:hover {
+  color: white;
+}
+nav ul li a::after {
+  content: " ";
+  width: 0%;
+  height: 3px;
+  background-color: black;
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  transition: 0.3s;
+}
+nav ul li a:hover::after {
+  width: 100%;
 }
 
-.btn1, .btn2{
-    font-size: 12pt;
-    padding: 10px 10px 10px 10px;
-    border-radius: 10px;
-    transition: 0.5s;
-    border: solid black;
+main {
+  padding: 40px 10%;
+}
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.msg {
+  font-size: 18pt;
+  text-align: center;
 }
 
-.btn1:hover, .btn2:hover{
-    background-color: black;
-    color: white;
-    border: solid rgb(255, 255, 255);
-    scale: 1.050;
-    transition: 0.5s;
+.botoes {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  z-index: 10;
+  position: relative;
+}
+.btn1,
+.btn2 {
+  font-family: "Faculty Glyphic";
+  font-size: 12pt;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: 0.5s;
+  border: solid black 2px;
+  background: transparent;
+  cursor: pointer;
+}
+.btn1 a,
+.btn2 a {
+  color: inherit;
+  text-decoration: none;
+}
+.btn1:hover,
+.btn2:hover {
+  background-color: black;
+  color: white;
+  border: solid rgb(255, 255, 255) 2px;
+  transform: scale(1.05);
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+.fotinha2 img {
+  max-width: 300px;
+  border-radius: 15px;
+  border: 3px solid black;
+}
+.content {
+  max-width: 600px;
+}
+.conteudo {
+  font-size: 14pt;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.projetos-container,
+.container-servicos {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+.projeto-card,
+.servico-item {
+  background-color: #e0e0e0;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  transition: 0.3s;
+}
+.projeto-card:hover,
+.servico-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+.projeto-card video {
+  border-radius: 5px;
+  margin-top: 15px;
+  border: 1px solid black;
+  max-width: 100%;
+  height: auto;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  background-color: #e0e0e0;
+  padding: 30px;
+  border-radius: 10px;
+  border: 2px solid black;
+}
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 14pt;
+}
+input,
+textarea {
+  font-family: "Faculty Glyphic", sans-serif;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 12pt;
+}
+.btn-enviar {
+  background-color: transparent;
+  border: 2px solid black;
+  padding: 12px;
+  font-size: 14pt;
+  font-family: "Faculty Glyphic";
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-enviar:hover {
+  background-color: black;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  .botoes {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .flex {
+    flex-direction: column;
+    text-align: center;
+  }
+  .projetos-container,
+  .container-servicos {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.footer {
+  background-color: #111;
+  color: white;
+  padding: 20px 10%; /* antes estava 30px */
+  margin-top: 0; /* remova os 60px */
+}
+
+.footer-basic {
+  background-color: #111;
+  color: white;
+  text-align: center;
+  padding: 15px 10%; /* reduzido */
+  margin-top: 0; /* remova os 60px */
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  color: white;
+  font-size: 22px;
+  transition: 0.3s;
+}
+
+.footer-links a:hover {
+  transform: scale(1.2);
+}
+
+.footer-copy {
+  font-size: 11pt;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .footer-links {
+    gap: 15px;
+  }
 }
