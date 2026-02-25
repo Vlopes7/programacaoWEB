@@ -16,7 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #1e1e24; /* Thème sombre doux */
+  background-color: #1e1e24;
   color: #f0f0f0;
 }
 
@@ -142,7 +142,6 @@ nav ul li a:hover::after {
   gap: 30px;
   flex-wrap: wrap;
   margin-top: 30px;
-  /* Adicionado para garantir o alinhamento da linha */
   align-items: stretch;
 }
 
@@ -155,29 +154,24 @@ nav ul li a:hover::after {
   width: 300px;
   text-align: center;
   transition: 0.3s;
-  /* ADIÇÕES PARA ALINHAMENTO VERTICAL */
   display: flex;
   flex-direction: column;
-  height: 100%; /* Garante que ocupem a altura total da linha */
+  height: 100%;
 }
 
 .projeto-card p,
 .servico-item p {
   font-size: 11pt;
   line-height: 1.5;
-  /* Adiciona um espaço mínimo garantido abaixo do texto */
   margin-bottom: 20px;
-  /* Opcional: faz o texto ocupar o espaço disponível se quiser que o botão fique sempre lá embaixo mesmo com pouco texto */
   flex-grow: 1; 
 }
 
-/* NOVA REGRA: Alinhamento específico para o botão dentro do card de projeto */
 .projeto-card .btn2 {
-    margin-top: auto; /* O segredo do alinhamento: empurra o botão para o final */
-    width: 100%;      /* Largura total */
+    margin-top: auto;
+    width: 100%;
 }
 
-/* Garante que o link dentro do botão também ocupe a largura total e seja clicável */
 .projeto-card .btn2 a {
     display: block;
     width: 100%;
@@ -245,7 +239,6 @@ textarea {
   color: #1e1e24;
 }
 
-/* Footer Unifié */
 .footer, .footer-basic {
   background-color: #111;
   color: white;
