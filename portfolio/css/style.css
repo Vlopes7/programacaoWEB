@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .faculty-glyphic-regular {
   font-family: "Faculty Glyphic", sans-serif;
 }
@@ -5,12 +9,15 @@
 html,
 body {
   height: 100%;
+  margin: 0;
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #1e1e24; /* Thème sombre doux */
+  color: #f0f0f0;
 }
 
 main {
@@ -42,17 +49,17 @@ nav ul li a {
   text-decoration: none;
   font-size: 16pt;
   position: relative;
-  color: black;
+  color: #f0f0f0;
   transition: 0.5s;
 }
 nav ul li a:hover {
-  color: white;
+  color: #a0c4ff;
 }
 nav ul li a::after {
   content: " ";
   width: 0%;
   height: 3px;
-  background-color: black;
+  background-color: #a0c4ff;
   position: absolute;
   left: 0;
   bottom: -5px;
@@ -62,9 +69,6 @@ nav ul li a:hover::after {
   width: 100%;
 }
 
-main {
-  padding: 40px 10%;
-}
 .container {
   display: flex;
   width: 100%;
@@ -72,8 +76,10 @@ main {
   align-items: center;
 }
 .msg {
-  font-size: 18pt;
+  font-size: 14pt;
   text-align: center;
+  max-width: 800px;
+  line-height: 1.6;
 }
 
 .botoes {
@@ -90,9 +96,10 @@ main {
   padding: 10px 20px;
   border-radius: 10px;
   transition: 0.5s;
-  border: solid black 2px;
+  border: solid #f0f0f0 2px;
   background: transparent;
   cursor: pointer;
+  color: #f0f0f0;
 }
 .btn1 a,
 .btn2 a {
@@ -101,9 +108,8 @@ main {
 }
 .btn1:hover,
 .btn2:hover {
-  background-color: black;
-  color: white;
-  border: solid rgb(255, 255, 255) 2px;
+  background-color: #f0f0f0;
+  color: #1e1e24;
   transform: scale(1.05);
 }
 
@@ -118,13 +124,13 @@ main {
 .fotinha2 img {
   max-width: 300px;
   border-radius: 15px;
-  border: 3px solid black;
+  border: 3px solid #555;
 }
 .content {
   max-width: 600px;
 }
 .conteudo {
-  font-size: 14pt;
+  font-size: 12pt;
   line-height: 1.6;
   margin-bottom: 15px;
 }
@@ -136,26 +142,58 @@ main {
   gap: 30px;
   flex-wrap: wrap;
   margin-top: 30px;
+  /* Adicionado para garantir o alinhamento da linha */
+  align-items: stretch;
 }
+
 .projeto-card,
 .servico-item {
-  background-color: #e0e0e0;
-  border: 2px solid black;
+  background-color: #2b2b36;
+  border: 2px solid #444;
   border-radius: 10px;
   padding: 20px;
   width: 300px;
   text-align: center;
   transition: 0.3s;
+  /* ADIÇÕES PARA ALINHAMENTO VERTICAL */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Garante que ocupem a altura total da linha */
 }
+
+.projeto-card p,
+.servico-item p {
+  font-size: 11pt;
+  line-height: 1.5;
+  /* Adiciona um espaço mínimo garantido abaixo do texto */
+  margin-bottom: 20px;
+  /* Opcional: faz o texto ocupar o espaço disponível se quiser que o botão fique sempre lá embaixo mesmo com pouco texto */
+  flex-grow: 1; 
+}
+
+/* NOVA REGRA: Alinhamento específico para o botão dentro do card de projeto */
+.projeto-card .btn2 {
+    margin-top: auto; /* O segredo do alinhamento: empurra o botão para o final */
+    width: 100%;      /* Largura total */
+}
+
+/* Garante que o link dentro do botão também ocupe a largura total e seja clicável */
+.projeto-card .btn2 a {
+    display: block;
+    width: 100%;
+}
+
 .projeto-card:hover,
 .servico-item:hover {
   transform: translateY(-10px);
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  border-color: #a0c4ff;
 }
+
 .projeto-card video {
   border-radius: 5px;
   margin-top: 15px;
-  border: 1px solid black;
+  border: 1px solid #444;
   max-width: 100%;
   height: auto;
 }
@@ -170,38 +208,83 @@ form {
   flex-direction: column;
   width: 100%;
   max-width: 500px;
-  background-color: #e0e0e0;
+  background-color: #2b2b36;
   padding: 30px;
   border-radius: 10px;
-  border: 2px solid black;
+  border: 2px solid #444;
 }
 label {
   margin-bottom: 5px;
   font-weight: bold;
-  font-size: 14pt;
+  font-size: 12pt;
 }
 input,
 textarea {
   font-family: "Faculty Glyphic", sans-serif;
   padding: 10px;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #555;
   border-radius: 5px;
-  font-size: 12pt;
+  font-size: 11pt;
+  background-color: #1e1e24;
+  color: #f0f0f0;
 }
 .btn-enviar {
   background-color: transparent;
-  border: 2px solid black;
+  border: 2px solid #f0f0f0;
   padding: 12px;
-  font-size: 14pt;
+  font-size: 12pt;
   font-family: "Faculty Glyphic";
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
+  color: #f0f0f0;
 }
 .btn-enviar:hover {
-  background-color: black;
+  background-color: #f0f0f0;
+  color: #1e1e24;
+}
+
+/* Footer Unifié */
+.footer, .footer-basic {
+  background-color: #111;
   color: white;
+  padding: 20px 10%;
+  width: 100%;
+  margin-top: auto;
+}
+
+.footer-basic {
+  text-align: center;
+  padding: 15px 10%;
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  color: white;
+  font-size: 22px;
+  transition: 0.3s;
+}
+
+.footer-links a:hover {
+  transform: scale(1.2);
+  color: #a0c4ff;
+}
+
+.footer-copy {
+  font-size: 11pt;
+  opacity: 0.8;
+  margin: 0;
 }
 
 @media (max-width: 768px) {
@@ -224,50 +307,6 @@ textarea {
     flex-direction: column;
     align-items: center;
   }
-}
-
-.footer {
-  background-color: #111;
-  color: white;
-  padding: 20px 10%; /* antes estava 30px */
-  margin-top: 0; /* remova os 60px */
-}
-
-.footer-basic {
-  background-color: #111;
-  color: white;
-  text-align: center;
-  padding: 15px 10%; /* reduzido */
-  margin-top: 0; /* remova os 60px */
-}
-
-.footer-content {
-  text-align: center;
-}
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  margin-bottom: 15px;
-}
-
-.footer-links a {
-  color: white;
-  font-size: 22px;
-  transition: 0.3s;
-}
-
-.footer-links a:hover {
-  transform: scale(1.2);
-}
-
-.footer-copy {
-  font-size: 11pt;
-  opacity: 0.8;
-}
-
-@media (max-width: 768px) {
   .footer-links {
     gap: 15px;
   }
