@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agenda de Tarefas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <h1>tarefas<span>.</span></h1>
+      </div>
+      <div class="counters">
+        <div class="counter">
+          <span class="counter-num" id="count-pending">0</span>
+          <span class="counter-label">pendentes</span>
+        </div>
+        <div class="counter-divider"></div>
+        <div class="counter">
+          <span class="counter-num" id="count-done">0</span>
+          <span class="counter-label">concluídas</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="form-section">
+      <div class="form-header">
+        <h2>Nova tarefa</h2>
+        <p>Organize seu dia com precisão.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="task-name">Nome da tarefa</label>
+        <input type="text" id="task-name" placeholder="O que precisa ser feito?" autocomplete="off" />
+        <span class="error-msg" id="err-name"></span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="task-category">Categoria</label>
+          <div class="select-wrap">
+            <select id="task-category">
+              <option value="">Selecionar</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Estudos">Estudos</option>
+              <option value="Pessoal">Pessoal</option>
+            </select>
+          </div>
+          <span class="error-msg" id="err-category"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="task-priority">Prioridade</label>
+          <div class="select-wrap">
+            <select id="task-priority">
+              <option value="">Selecionar</option>
+              <option value="Alta">Alta</option>
+              <option value="Média">Média</option>
+              <option value="Baixa">Baixa</option>
+            </select>
+          </div>
+          <span class="error-msg" id="err-priority"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="task-date">Data limite</label>
+        <input type="date" id="task-date" />
+        <span class="error-msg" id="err-date"></span>
+      </div>
+
+      <button class="btn-add" id="btn-add">
+        <span class="btn-icon">+</span>
+        Adicionar Tarefa
+      </button>
+    </section>
+
+    <section class="list-section">
+      <div class="filters">
+        <div class="filter-group">
+          <label>Categoria</label>
+          <div class="filter-pills" id="filter-category">
+            <button class="pill active" data-value="Todas">Todas</button>
+            <button class="pill" data-value="Trabalho">Trabalho</button>
+            <button class="pill" data-value="Estudos">Estudos</button>
+            <button class="pill" data-value="Pessoal">Pessoal</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Ordenar por</label>
+          <div class="select-wrap slim">
+            <select id="filter-sort">
+              <option value="default">Padrão</option>
+              <option value="priority">Prioridade</option>
+              <option value="date">Data</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="task-list" id="task-list">
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon">✦</div>
+          <p>Nenhuma tarefa encontrada.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
