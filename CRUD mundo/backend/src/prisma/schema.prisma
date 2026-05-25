@@ -1,11 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -15,7 +9,7 @@ datasource db {
 model Continente {
   id Int @id @default(autoincrement())
   nome String
-  descricao String? 
+  descricao String?
   paises Pais[]
 }
 
@@ -25,10 +19,8 @@ model Pais {
   populacao Int 
   idiomaOficial String 
   moeda String
-
   continenteId Int 
   continente Continente @relation(fields: [continenteId], references: [id])
-
   cidades Cidade[]
 }
 
@@ -38,7 +30,6 @@ model Cidade{
   populacao Int 
   latitude Float
   longitude Float
-
   paisId Int
   pais Pais @relation(fields: [paisId], references: [id])
 }
