@@ -104,7 +104,7 @@ app.get("/continentes", async (req, res) => {
 });
 
 app.get("/continentes/:id", async (req, res) => {
-  const id = Number(req.params.id);
+  const id = req.params.id
   try {
     const continente = await prisma.continente.findUnique({
       where: { id }
@@ -119,7 +119,7 @@ app.get("/continentes/:id", async (req, res) => {
 });
 
 app.put("/continentes/:id", async (req, res) => {
-  const id = Number(req.params.id);
+  const id = req.params.id
   try {
     const { nome, descricao } = req.body;
     const continente = await prisma.continente.update({
@@ -133,7 +133,7 @@ app.put("/continentes/:id", async (req, res) => {
 });
 
 app.delete("/continentes/:id", async (req, res) => {
-  const id = Number(req.params.id);
+  const id = req.params.id
   try {
     await prisma.continente.delete({
       where: { id }
@@ -153,7 +153,7 @@ app.post("/paises", async (req, res) => {
         populacao: Number(populacao),
         idiomaOficial,
         moeda,
-        continenteId: Number(continenteId)
+        continenteId: continenteId
       }
     });
     res.status(201).json(pais);
@@ -172,7 +172,7 @@ app.get("/paises", async (req, res) => {
 });
 
 app.get("/paises/:id", async (req, res) => {
-  const id = Number(req.params.id);
+  const id = req.params.id
   try {
     const pais = await prisma.pais.findUnique({
       where: { id }
@@ -187,7 +187,7 @@ app.get("/paises/:id", async (req, res) => {
 });
 
 app.put("/paises/:id", async (req, res) => {
-  const id = Number(req.params.id);
+  const id = req.params.id
   try {
     const { nome, populacao, idiomaOficial, moeda, continenteId } = req.body;
     const pais = await prisma.pais.update({
@@ -197,7 +197,7 @@ app.put("/paises/:id", async (req, res) => {
         populacao: populacao ? Number(populacao) : undefined,
         idiomaOficial,
         moeda,
-        continenteId: continenteId ? Number(continenteId) : undefined
+        continenteId: continenteId ? continenteId : undefined
       }
     });
     res.json(pais);
@@ -207,7 +207,7 @@ app.put("/paises/:id", async (req, res) => {
 });
 
 app.delete("/paises/:id", async (req, res) => {
-  const id = Number(req.params.id);
+  const id = req.params.id
   try {
     await prisma.pais.delete({
       where: { id }
@@ -227,7 +227,7 @@ app.post("/cidades", async (req, res) => {
         populacao: Number(populacao),
         latitude: Number(latitude),
         longitude: Number(longitude),
-        paisId: Number(paisId)
+        paisId: paisId
       }
     });
     res.status(201).json(cidade);
@@ -246,7 +246,7 @@ app.get("/cidades", async (req, res) => {
 });
 
 app.get("/cidades/:id", async (req, res) => {
-  const id = Number(req.params.id);
+  const id = req.params.id
   try {
     const cidade = await prisma.cidade.findUnique({
       where: { id }
@@ -261,7 +261,7 @@ app.get("/cidades/:id", async (req, res) => {
 });
 
 app.put("/cidades/:id", async (req, res) => {
-  const id = Number(req.params.id);
+  const id = req.params.id
   try {
     const { nome, populacao, latitude, longitude, paisId } = req.body;
     const cidade = await prisma.cidade.update({
@@ -271,7 +271,7 @@ app.put("/cidades/:id", async (req, res) => {
         populacao: populacao ? Number(populacao) : undefined,
         latitude: latitude ? Number(latitude) : undefined,
         longitude: longitude ? Number(longitude) : undefined,
-        paisId: paisId ? Number(paisId) : undefined
+        paisId: paisId ? paisId : undefined
       }
     });
     res.json(cidade);
@@ -281,7 +281,7 @@ app.put("/cidades/:id", async (req, res) => {
 });
 
 app.delete("/cidades/:id", async (req, res) => {
-  const id = Number(req.params.id);
+  const id = req.params.id
   try {
     await prisma.cidade.delete({
       where: { id }
