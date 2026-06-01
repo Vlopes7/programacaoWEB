@@ -5,6 +5,7 @@ import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
@@ -20,6 +21,66 @@ app.get("/", (req, res) => {
     message: "servidor rodando"
   });
 });
+
+app.post('/cadastrar', async (req, res) => {
+  try{
+    const {nome, sobrenome, email, senha, dataNascimento} = req.body
+
+    const usuarioExiste = await prisma.usuario.findUnique({
+      where: { email }
+    });
+
+    if (usuarioExiste) {
+      return res.status(400).json({ error: "E-mail já cadastrado" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const senhaHash = await bcrypt.hash(senha, salt);
+
+    const [dia, mes, ano] = dataNascimento.split('/');
+    const dataIso = new Date(`${ano}-${mes}-${dia}T12:00:00Z`);
+
+    const usuario = await prisma.usuario.create({
+      data: {
+        nome: nome,
+        sobrenome: sobrenome,
+        email: email,
+        senha: senhaHash,
+        dataNascimento: dataIso
+      }
+    })
+    res.status(201).json(usuario);
+  }catch(error){
+    res.status(500).json({ 
+      error: "Erro ao criar usuário",
+      detalhe: error
+     });
+  }
+})
+
+app.post('/login', async (req, res) => {
+  try {
+    const { email, senha } = req.body;
+
+    const usuario = await prisma.usuario.findUnique({
+      where: { email }
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    const senhaValida = await bcrypt.compare(senha, usuario.senha);
+
+    if (!senhaValida) {
+      return res.status(401).json({ error: "Senha incorreta" });
+    }
+
+    res.status(200).json({ message: "Login realizado com sucesso", id: usuario.id });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao realizar login" });
+  }
+})
 
 app.post("/continentes", async (req, res) => {
   try {
