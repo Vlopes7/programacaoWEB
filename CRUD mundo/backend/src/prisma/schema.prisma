@@ -20,7 +20,7 @@ model Pais {
   idiomaOficial String 
   moeda String
   continenteId Int 
-  continente Continente @relation(fields: [continenteId], references: [id])
+  continente Continente @relation(fields: [continenteId], references: [id], onDelete: Cascade)
   cidades Cidade[]
 }
 
@@ -31,5 +31,13 @@ model Cidade{
   latitude Float
   longitude Float
   paisId Int
-  pais Pais @relation(fields: [paisId], references: [id])
+  pais Pais @relation(fields: [paisId], references: [id], onDelete: Cascade)
+}
+
+model Usuario {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  senha String
+  nome String
+  sobrenome String
 }
