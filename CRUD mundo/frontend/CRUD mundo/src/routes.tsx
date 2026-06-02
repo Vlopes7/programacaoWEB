@@ -4,8 +4,10 @@ import { AuthContext } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import Login from './pages/Login'
 import Cadastro from './pages/Cadastro';
-
-const Placeholder = ({ title }: { title: string }) => <h1>{title}</h1>;
+import Continentes from './pages/Continentes';
+import Paises from './pages/Paises';
+import Cidades from './pages/Cidades';
+import Dashboard from './pages/Dashboard';
 
 const PrivateRoute = ({ children }: { children: React.ReactElement }) => {
   const { signed } = useContext(AuthContext);
@@ -24,10 +26,10 @@ const AppRoutes: React.FC = () => {
             <Layout />
           </PrivateRoute>
         }>
-          <Route index element={<Placeholder title="Dashboard Inicial" />} />
-          <Route path="continentes" element={<Placeholder title="CRUD de Continentes" />} />
-          <Route path="paises" element={<Placeholder title="CRUD de Países" />} />
-          <Route path="cidades" element={<Placeholder title="CRUD de Cidades" />} />
+          <Route index element={<Dashboard/>} />
+          <Route path="continentes" element={<Continentes/>} />
+          <Route path="paises" element={<Paises/>} />
+          <Route path="cidades" element={<Cidades/>} />
         </Route>
       </Routes>
     </BrowserRouter>

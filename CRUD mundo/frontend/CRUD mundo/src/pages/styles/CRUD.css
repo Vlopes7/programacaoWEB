@@ -1,0 +1,98 @@
+.crud-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.crud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.crud-header h1 {
+  color: var(--primary-color);
+}
+
+.crud-form {
+  display: flex;
+  gap: 15px;
+  background-color: var(--bg-paper);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.crud-form .input-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.btn-salvar {
+  background-color: var(--success-color);
+  color: white;
+  height: 41px;
+}
+
+.btn-salvar:hover {
+  background-color: var(--success-hover);
+}
+
+.crud-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.crud-card {
+  background-color: var(--bg-paper);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.crud-card h3 {
+  color: var(--text-main);
+}
+
+.crud-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.crud-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-editar {
+  background-color: var(--primary-color);
+  color: white;
+  flex: 1;
+}
+
+.btn-editar:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-deletar {
+  background-color: transparent;
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+  flex: 1;
+}
+
+.btn-deletar:hover {
+  background-color: var(--danger-color);
+  color: white;
+}
