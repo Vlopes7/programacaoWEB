@@ -16,6 +16,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log(
+    `[${new Date().toLocaleString()}] ${req.method} ${req.originalUrl}`
+  );
+
+  console.log("Body:", req.body);
+
+  next();
+});
+
 app.get("/", (req, res) => {
   res.json({
     message: "servidor rodando"
@@ -144,9 +154,10 @@ app.delete("/continentes/:id", async (req, res) => {
   }
 });
 
-app.post("/paises", async (req, res) => {
+app.post("/paises/:id", async (req, res) => {
   try {
-    const { nome, populacao, idiomaOficial, moeda, continenteId } = req.body;
+    const continenteId = req.params.id;
+    const { nome, populacao, idiomaOficial, moeda } = req.body;
     const pais = await prisma.pais.create({
       data: {
         nome,
