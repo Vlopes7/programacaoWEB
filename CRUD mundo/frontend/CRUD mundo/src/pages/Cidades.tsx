@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import axios from 'axios';
 import './styles/CRUD.css';
 
 interface Pais {
@@ -16,14 +17,43 @@ interface Cidade {
   paisId: string;
 }
 
+const CidadeCard: React.FC<{ cidade: Cidade; onEdit: (c: Cidade) => void; onDelete: (id: string) => void }> = ({ cidade, onEdit, onDelete }) => {
+  const [temperatura, setTemperatura] = useState<number | null>(null);
+
+  useEffect(() => {
+    axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${cidade.latitude}&longitude=${cidade.longitude}&current_weather=true`)
+      .then(response => {
+        setTemperatura(response.data.current_weather.temperature);
+      })
+      .catch(() => setTemperatura(null));
+  }, [cidade.latitude, cidade.longitude]);
+
+  return (
+    <div className="crud-card">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <h3>{cidade.nome}</h3>
+        {temperatura !== null && (
+          <span style={{ backgroundColor: 'var(--primary-color)', color: 'white', padding: '4px 8px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: 'bold' }}>
+            {temperatura}°C
+          </span>
+        )}
+      </div>
+      <p><strong>População:</strong> {cidade.populacao}</p>
+      <p><strong>Lat/Long:</strong> {cidade.latitude.toFixed(2)}, {cidade.longitude.toFixed(2)}</p>
+      <div className="crud-card-actions">
+        <button onClick={() => onEdit(cidade)} className="btn-editar">Editar</button>
+        <button onClick={() => onDelete(cidade.id)} className="btn-deletar">Deletar</button>
+      </div>
+    </div>
+  );
+};
+
 const Cidades: React.FC = () => {
   const [cidades, setCidades] = useState<Cidade[]>([]);
   const [paises, setPaises] = useState<Pais[]>([]);
   
   const [nome, setNome] = useState('');
   const [populacao, setPopulacao] = useState('');
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
   const [paisId, setPaisId] = useState('');
   const [editId, setEditId] = useState<string | null>(null);
 
@@ -45,12 +75,22 @@ const Cidades: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const payload = { 
-        nome, 
-        populacao: Number(populacao), 
-        latitude: Number(latitude), 
-        longitude: Number(longitude), 
-        paisId 
+      const geoResponse = await axios.get(`https://geocoding-api.open-meteo.com/v1/search?name=${nome}&count=1&language=pt&format=json`);
+
+      if (!geoResponse.data.results || geoResponse.data.results.length === 0) {
+        alert('Não foi possível encontrar as coordenadas para esta cidade. Tente ser mais específico.');
+        return;
+      }
+
+      const lat = geoResponse.data.results[0].latitude;
+      const lng = geoResponse.data.results[0].longitude;
+
+      const payload = {
+        nome,
+        populacao: Number(populacao),
+        latitude: lat,
+        longitude: lng,
+        paisId
       };
       
       if (editId) {
@@ -67,21 +107,11 @@ const Cidades: React.FC = () => {
   };
 
   const limparFormulario = () => {
-    setNome('');
-    setPopulacao('');
-    setLatitude('');
-    setLongitude('');
-    setPaisId('');
-    setEditId(null);
+    setNome(''); setPopulacao(''); setPaisId(''); setEditId(null);
   };
 
   const handleEdit = (cidade: Cidade) => {
-    setNome(cidade.nome);
-    setPopulacao(cidade.populacao.toString());
-    setLatitude(cidade.latitude.toString());
-    setLongitude(cidade.longitude.toString());
-    setPaisId(cidade.paisId);
-    setEditId(cidade.id);
+    setNome(cidade.nome); setPopulacao(cidade.populacao.toString()); setPaisId(cidade.paisId); setEditId(cidade.id);
   };
 
   const handleDelete = async (id: string) => {
@@ -110,14 +140,6 @@ const Cidades: React.FC = () => {
           <input type="number" value={populacao} onChange={(e) => setPopulacao(e.target.value)} required />
         </div>
         <div className="input-group">
-          <label>Latitude</label>
-          <input type="number" step="any" value={latitude} onChange={(e) => setLatitude(e.target.value)} required />
-        </div>
-        <div className="input-group">
-          <label>Longitude</label>
-          <input type="number" step="any" value={longitude} onChange={(e) => setLongitude(e.target.value)} required />
-        </div>
-        <div className="input-group">
           <label>País</label>
           <select value={paisId} onChange={(e) => setPaisId(e.target.value)} required>
             <option value="" disabled>Selecione...</option>
@@ -132,15 +154,7 @@ const Cidades: React.FC = () => {
 
       <div className="crud-list">
         {cidades.map((cidade) => (
-          <div key={cidade.id} className="crud-card">
-            <h3>{cidade.nome}</h3>
-            <p><strong>População:</strong> {cidade.populacao}</p>
-            <p><strong>Lat/Long:</strong> {cidade.latitude}, {cidade.longitude}</p>
-            <div className="crud-card-actions">
-              <button onClick={() => handleEdit(cidade)} className="btn-editar">Editar</button>
-              <button onClick={() => handleDelete(cidade.id)} className="btn-deletar">Deletar</button>
-            </div>
-          </div>
+          <CidadeCard key={cidade.id} cidade={cidade} onEdit={handleEdit} onDelete={handleDelete} />
         ))}
       </div>
     </div>

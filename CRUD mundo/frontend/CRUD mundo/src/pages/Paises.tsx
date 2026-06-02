@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import axios from 'axios';
 import './styles/CRUD.css';
 
 interface Continente {
@@ -15,6 +16,42 @@ interface Pais {
   moeda: string;
   continenteId: string;
 }
+
+const PaisCard: React.FC<{ pais: Pais; onEdit: (p: Pais) => void; onDelete: (id: string) => void }> = ({ pais, onEdit, onDelete }) => {
+  const [bandeira, setBandeira] = useState<string | null>(null);
+
+  useEffect(() => {
+    axios.get(`https://restcountries.com/v3.1/translation/${pais.nome}`)
+      .then(response => {
+        setBandeira(response.data[0]?.flags?.svg);
+      })
+      .catch(() => {
+        axios.get(`https://restcountries.com/v3.1/name/${pais.nome}`)
+          .then(res => setBandeira(res.data[0]?.flags?.svg))
+          .catch(() => setBandeira(null));
+      });
+  }, [pais.nome]);
+
+  return (
+    <div className="crud-card">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        {bandeira ? (
+          <img src={bandeira} alt={`Bandeira de ${pais.nome}`} style={{ width: '50px', borderRadius: '4px', border: '1px solid #ccc' }} />
+        ) : (
+          <div style={{ width: '50px', height: '33px', backgroundColor: '#e0e0e0', borderRadius: '4px' }}></div>
+        )}
+        <h3>{pais.nome}</h3>
+      </div>
+      <p><strong>População:</strong> {pais.populacao}</p>
+      <p><strong>Idioma:</strong> {pais.idiomaOficial}</p>
+      <p><strong>Moeda:</strong> {pais.moeda}</p>
+      <div className="crud-card-actions">
+        <button onClick={() => onEdit(pais)} className="btn-editar">Editar</button>
+        <button onClick={() => onDelete(pais.id)} className="btn-deletar">Deletar</button>
+      </div>
+    </div>
+  );
+};
 
 const Paises: React.FC = () => {
   const [paises, setPaises] = useState<Pais[]>([]);
@@ -46,13 +83,11 @@ const Paises: React.FC = () => {
     e.preventDefault();
     try {
       const payload = { nome, populacao: Number(populacao), idiomaOficial, moeda, continenteId };
-      
       if (editId) {
         await api.put(`/paises/${editId}`, payload);
       } else {
         await api.post('/paises', payload);
       }
-      
       limparFormulario();
       carregarDados();
     } catch (error) {
@@ -61,21 +96,12 @@ const Paises: React.FC = () => {
   };
 
   const limparFormulario = () => {
-    setNome('');
-    setPopulacao('');
-    setIdiomaOficial('');
-    setMoeda('');
-    setContinenteId('');
-    setEditId(null);
+    setNome(''); setPopulacao(''); setIdiomaOficial(''); setMoeda(''); setContinenteId(''); setEditId(null);
   };
 
   const handleEdit = (pais: Pais) => {
-    setNome(pais.nome);
-    setPopulacao(pais.populacao.toString());
-    setIdiomaOficial(pais.idiomaOficial);
-    setMoeda(pais.moeda);
-    setContinenteId(pais.continenteId);
-    setEditId(pais.id);
+    setNome(pais.nome); setPopulacao(pais.populacao.toString()); setIdiomaOficial(pais.idiomaOficial);
+    setMoeda(pais.moeda); setContinenteId(pais.continenteId); setEditId(pais.id);
   };
 
   const handleDelete = async (id: string) => {
@@ -126,16 +152,7 @@ const Paises: React.FC = () => {
 
       <div className="crud-list">
         {paises.map((pais) => (
-          <div key={pais.id} className="crud-card">
-            <h3>{pais.nome}</h3>
-            <p><strong>População:</strong> {pais.populacao}</p>
-            <p><strong>Idioma:</strong> {pais.idiomaOficial}</p>
-            <p><strong>Moeda:</strong> {pais.moeda}</p>
-            <div className="crud-card-actions">
-              <button onClick={() => handleEdit(pais)} className="btn-editar">Editar</button>
-              <button onClick={() => handleDelete(pais.id)} className="btn-deletar">Deletar</button>
-            </div>
-          </div>
+          <PaisCard key={pais.id} pais={pais} onEdit={handleEdit} onDelete={handleDelete} />
         ))}
       </div>
     </div>

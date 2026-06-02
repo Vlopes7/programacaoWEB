@@ -154,10 +154,9 @@ app.delete("/continentes/:id", async (req, res) => {
   }
 });
 
-app.post("/paises/:id", async (req, res) => {
+app.post("/paises", async (req, res) => {
   try {
-    const continenteId = req.params.id;
-    const { nome, populacao, idiomaOficial, moeda } = req.body;
+    const { nome, populacao, idiomaOficial, moeda, continenteId } = req.body;
     const pais = await prisma.pais.create({
       data: {
         nome,
