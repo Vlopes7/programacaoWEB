@@ -64,6 +64,8 @@ const Paises: React.FC = () => {
   const [continenteId, setContinenteId] = useState('');
   const [editId, setEditId] = useState<string | null>(null);
 
+  const [filtroContinente, setFiltroContinente] = useState('');
+
   useEffect(() => {
     carregarDados();
   }, []);
@@ -114,6 +116,10 @@ const Paises: React.FC = () => {
     }
   };
 
+  const paisesFiltrados = filtroContinente 
+    ? paises.filter(pais => pais.continenteId === filtroContinente)
+    : paises;
+
   return (
     <div className="crud-container">
       <div className="crud-header">
@@ -150,10 +156,21 @@ const Paises: React.FC = () => {
         {editId && <button type="button" onClick={limparFormulario} className="btn-deletar">Cancelar</button>}
       </form>
 
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'var(--bg-paper)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+        <strong>Filtros:</strong>
+        <select value={filtroContinente} onChange={(e) => setFiltroContinente(e.target.value)} style={{ minWidth: '200px' }}>
+          <option value="">Todos os Continentes</option>
+          {continentes.map(c => (
+            <option key={c.id} value={c.id}>{c.nome}</option>
+          ))}
+        </select>
+      </div>
+
       <div className="crud-list">
-        {paises.map((pais) => (
+        {paisesFiltrados.map((pais) => (
           <PaisCard key={pais.id} pais={pais} onEdit={handleEdit} onDelete={handleDelete} />
         ))}
+        {paisesFiltrados.length === 0 && <p>Nenhum país encontrado com estes filtros.</p>}
       </div>
     </div>
   );

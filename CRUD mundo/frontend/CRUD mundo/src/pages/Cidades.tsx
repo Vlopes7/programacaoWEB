@@ -3,9 +3,15 @@ import api from '../services/api';
 import axios from 'axios';
 import './styles/CRUD.css';
 
+interface Continente {
+  id: string;
+  nome: string;
+}
+
 interface Pais {
   id: string;
   nome: string;
+  continenteId: string;
 }
 
 interface Cidade {
@@ -51,11 +57,15 @@ const CidadeCard: React.FC<{ cidade: Cidade; onEdit: (c: Cidade) => void; onDele
 const Cidades: React.FC = () => {
   const [cidades, setCidades] = useState<Cidade[]>([]);
   const [paises, setPaises] = useState<Pais[]>([]);
+  const [continentes, setContinentes] = useState<Continente[]>([]);
   
   const [nome, setNome] = useState('');
   const [populacao, setPopulacao] = useState('');
   const [paisId, setPaisId] = useState('');
   const [editId, setEditId] = useState<string | null>(null);
+
+  const [filtroPais, setFiltroPais] = useState('');
+  const [filtroContinente, setFiltroContinente] = useState('');
 
   useEffect(() => {
     carregarDados();
@@ -65,8 +75,10 @@ const Cidades: React.FC = () => {
     try {
       const resCidades = await api.get('/cidades');
       const resPaises = await api.get('/paises');
+      const resContinentes = await api.get('/continentes');
       setCidades(resCidades.data);
       setPaises(resPaises.data);
+      setContinentes(resContinentes.data);
     } catch (error) {
       alert('Erro ao carregar os dados');
     }
@@ -124,6 +136,22 @@ const Cidades: React.FC = () => {
     }
   };
 
+  const cidadesFiltradas = cidades.filter(cidade => {
+    let matchPais = true;
+    let matchContinente = true;
+
+    if (filtroPais) {
+      matchPais = cidade.paisId === filtroPais;
+    }
+
+    if (filtroContinente) {
+      const paisDaCidade = paises.find(p => p.id === cidade.paisId);
+      matchContinente = paisDaCidade?.continenteId === filtroContinente;
+    }
+
+    return matchPais && matchContinente;
+  });
+
   return (
     <div className="crud-container">
       <div className="crud-header">
@@ -152,10 +180,30 @@ const Cidades: React.FC = () => {
         {editId && <button type="button" onClick={limparFormulario} className="btn-deletar">Cancelar</button>}
       </form>
 
+      <div style={{ display: 'flex', alignItems: 'center', gap: '15px', backgroundColor: 'var(--bg-paper)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-color)', flexWrap: 'wrap' }}>
+        <strong>Filtros:</strong>
+        <select value={filtroContinente} onChange={(e) => setFiltroContinente(e.target.value)} style={{ minWidth: '200px' }}>
+          <option value="">Todos os Continentes</option>
+          {continentes.map(c => (
+            <option key={c.id} value={c.id}>{c.nome}</option>
+          ))}
+        </select>
+
+        <select value={filtroPais} onChange={(e) => setFiltroPais(e.target.value)} style={{ minWidth: '200px' }}>
+          <option value="">Todos os Países</option>
+          {paises
+            .filter(p => (filtroContinente ? p.continenteId === filtroContinente : true))
+            .map(p => (
+              <option key={p.id} value={p.id}>{p.nome}</option>
+            ))}
+        </select>
+      </div>
+
       <div className="crud-list">
-        {cidades.map((cidade) => (
+        {cidadesFiltradas.map((cidade) => (
           <CidadeCard key={cidade.id} cidade={cidade} onEdit={handleEdit} onDelete={handleDelete} />
         ))}
+        {cidadesFiltradas.length === 0 && <p>Nenhuma cidade encontrada com estes filtros.</p>}
       </div>
     </div>
   );
