@@ -1,0 +1,36 @@
+.cidade-card {
+  background: var(--bg-paper);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.cidade-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.temperatura-badge {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.filtros-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: var(--bg-paper);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.filtros-container select {
+  min-width: 200px;
+}

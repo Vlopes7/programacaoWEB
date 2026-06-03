@@ -1,0 +1,32 @@
+.pais-card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.bandeira-img {
+  width: 50px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.bandeira-placeholder {
+  width: 50px;
+  height: 33px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+.filtro-paises {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-paper);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.filtro-paises select {
+  min-width: 200px;
+}
