@@ -15,7 +15,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storagedUser = localStorage.getItem('@CRUDMundo:userId');
+    const storagedUser = sessionStorage.getItem('@CRUDMundo:userId');
     if (storagedUser) {
       setUserId(storagedUser);
     }
@@ -24,12 +24,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = (id: string) => {
     setUserId(id);
-    localStorage.setItem('@CRUDMundo:userId', id);
+    sessionStorage.setItem('@CRUDMundo:userId', id);
   };
 
   const logout = () => {
     setUserId(null);
-    localStorage.removeItem('@CRUDMundo:userId');
+    sessionStorage.removeItem('@CRUDMundo:userId');
   };
 
   if (loading) {
