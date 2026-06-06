@@ -1,4 +1,5 @@
-# Relatório de Desempenho e Testes de Carga — Projeto CRUD Mundo
+# Relatório de Desempenho e Testes de Carga — Projeto CRUD Mundo 
+(`Teste realizado por: Julia Prianti`)
 
 Este relatório apresenta os resultados analíticos dos testes de estresse e carga realizados no backend da aplicação **CRUD Mundo**, desenvolvida em **TypeScript**, **Node.js** com **Express**, utilizando **Prisma ORM** e banco de dados **PostgreSQL**.
 
