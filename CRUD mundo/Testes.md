@@ -61,11 +61,3 @@ Geralmente, rotas de escrita (`POST`) são os principais gargalos de qualquer AP
 O sistema processou com sucesso **5.000 cadastros em apenas 10 segundos**, mantendo uma latência média impressionante de **108.66 ms**. A metade mais rápida das requisições levou meros **85 ms** para ser concluída (percentil 50%). O tempo máximo registrado chegou a **1.77 segundos**, o que reflete a barreira física do *Connection Pool* do PostgreSQL processando as filas de transações pesadas. O dado mais importante deste teste é a estabilidade: mesmo sob intenso bombardeio de gravação, o servidor não rejeitou nenhuma requisição e manteve 100% de integridade nas respostas.
 
 ---
-
-## 3. Conclusão e Recomendações
-
-Os testes comprovam que o ecossistema backend está maduro, robusto e pronto para operações reais, atendendo com rigor os critérios de escalabilidade exigidos na disciplina de Programação Web.
-
-Para escalar a aplicação no futuro em ambientes de produção (como AWS, Render ou Fly.io), recomenda-se:
-1. **Ajuste do Connection Pool:** Configurar explicitamente o parâmetro `connection_limit` na string de conexão do Prisma no arquivo `.env` para otimizar o uso simultâneo de conexões de acordo com o plano do banco de dados.
-2. **Camada de Cache:** Implementar cache em memória (como Redis) para as rotas de busca de listagens (`GET`), blindando o banco de dados contra acessos repetitivos de leitura.
