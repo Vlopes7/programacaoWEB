@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: crudmundo_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: fatec
+      POSTGRES_DB: CRUD_Mundo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: crudmundo-backend
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:fatec@postgres:5432/CRUD_Mundo
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: sh -c "npx prisma migrate deploy && npm run dev"
+
+  frontend:
+    build:
+      context: ./frontend/CRUD mundo
+    container_name: crudmundo-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend/CRUD mundo:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+
+volumes:
+  postgres_data:
